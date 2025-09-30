@@ -1,13 +1,27 @@
 name: TruthAI CI
 on: [push, workflow_dispatch]
+
 jobs:
   run:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
-        with: {python-version: '3.10'}
-      - run: pip install -r requirements.txt
-      - run: python orchestrator.py --suite core --model openai_default --log logs/core.jsonl
-      - run: python tools/report.py --log logs/core.jsonl --out reports/core.html
-      - run: python tools/whitepaper.py --log logs/core.jsonl --out reports/core.pdf
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      # 👇 ensures logs/ and reports/ exist
+      - name: Prepare directories
+        run: mkdir -p logs reports
+
+      - name: Run orchestrator
+        run: python orchestrator.py --suite core --model openai_default --log logs/core.jsonl
+
+      - name: Generate HTML report
+        run: python tools/report.py --log logs/core.jsonl --out reports/core.html
+
+      - name: Generate PDF whitepaper
+        run: python tools/whitepaper.py --log logs/core.jsonl --out reports/core.pdf
