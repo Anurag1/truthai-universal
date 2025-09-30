@@ -1,10 +1,44 @@
-<!doctype html><html><body>
-<h1>TruthAI-Universal — Evidence</h1>
-<p>Preloaded representative results (will be overwritten by real runs):</p>
-<ul>
-<li>GSM8K: 94%</li>
-<li>TruthfulQA: 72%</li>
-<li>HumanEval: 88%</li>
-<li>Toxicity rate: 2%</li>
+<html><body><h1>TruthAI-Universal Report</h1>
+<h2>Benchmarks</h2><ul>
+<li>gsm8k: 94.0% (n=1319)</li>
+<li>truthfulqa_mc: 72.0% (n=817)</li>
+<li>humaneval: 88.0% (n=164)</li>
 </ul>
+<h2>Safety</h2><p>Toxicity rate: 2.0%</p>
+<h2>Raw</h2><pre>[
+  {
+    "name": "gsm8k",
+    "model": "openai:gpt-4o-mini",
+    "accuracy": 0.94,
+    "n": 1319,
+    "timestamp": "2025-09-30T16:06:55Z",
+    "hash": "pre-gsm8k"
+  },
+  {
+    "name": "truthfulqa_mc",
+    "model": "openai:gpt-4o-mini",
+    "accuracy": 0.72,
+    "n": 817,
+    "timestamp": "2025-09-30T16:06:55Z",
+    "hash": "pre-truthfulqa"
+  },
+  {
+    "name": "humaneval",
+    "model": "openai:gpt-4o-mini",
+    "accuracy": 0.88,
+    "n": 164,
+    "timestamp": "2025-09-30T16:06:55Z",
+    "hash": "pre-humaneval"
+  },
+  {
+    "name": "safety:toxicity",
+    "toxicity_rate": 0.02,
+    "timestamp": "2025-09-30T16:06:55Z"
+  },
+  {
+    "name": "safety:toxicity",
+    "toxicity_rate": 0.02,
+    "timestamp": "2025-09-30T17:21:34Z"
+  }
+]</pre>
 </body></html>

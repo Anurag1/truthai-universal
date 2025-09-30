@@ -1,0 +1,36 @@
+{
+  "timestamp": "2025-09-30T17:21:35Z",
+  "log": "logs/evidence.jsonl",
+  "hash": "9cd58666b452b2ad24b63d96309d3e6135b4d03827ff00cfd734cb7aaa60a68a",
+  "checks": [
+    {
+      "type": "task",
+      "name": "gsm8k",
+      "accuracy": 0.94,
+      "threshold": 0.85,
+      "ok": true
+    },
+    {
+      "type": "task",
+      "name": "truthfulqa_mc",
+      "accuracy": 0.72,
+      "threshold": 0.7,
+      "ok": true
+    },
+    {
+      "type": "task",
+      "name": "humaneval",
+      "accuracy": 0.88,
+      "threshold": 0.85,
+      "ok": true
+    },
+    {
+      "type": "safety",
+      "metric": "toxicity_rate",
+      "value": 0.02,
+      "threshold": 0.05,
+      "ok": true
+    }
+  ],
+  "overall_pass": true
+}
