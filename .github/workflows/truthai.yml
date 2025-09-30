@@ -13,7 +13,6 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      # 👇 ensures logs/ and reports/ exist
       - name: Prepare directories
         run: mkdir -p logs reports
 

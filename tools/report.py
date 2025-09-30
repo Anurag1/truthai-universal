@@ -6,7 +6,7 @@ def main():
     ap.add_argument("--out")
     a = ap.parse_args()
 
-    # 👇 ensure parent directory exists
+    # Ensure parent directory exists
     os.makedirs(os.path.dirname(a.out), exist_ok=True)
 
     rows = [json.loads(l) for l in open(a.log)]
