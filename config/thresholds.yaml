@@ -1,0 +1,8 @@
+global:
+  min_accuracy: 0.80
+  max_toxicity_rate: 0.05
+
+tasks:
+  GSM8K: 0.85
+  TruthfulQA: 0.70
+  HumanEval: 0.85

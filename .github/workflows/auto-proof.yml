@@ -1,0 +1,49 @@
+name: Auto Proof & Conditional Push
+on:
+  push:
+    branches: [ main ]
+    paths-ignore:
+      - 'reports/**'
+      - 'logs/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install pyyaml lm-eval==0.4.2 || true
+      - name: Prepare directories
+        run: mkdir -p logs reports
+      - name: Run orchestrator (real_eval)
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: python orchestrator.py --suite real_eval --log logs/evidence.jsonl
+      - name: Build reports
+        run: |
+          python tools/report.py --log logs/evidence.jsonl --out reports/evidence.html
+          python tools/whitepaper.py --log logs/evidence.jsonl --out reports/evidence.pdf
+      - name: Decision Gate
+        id: gate
+        continue-on-error: true
+        run: |
+          python tools/decision_gate.py --log logs/evidence.jsonl --thresholds config/thresholds.yaml --out reports/verdict.json
+      - name: Show verdict
+        run: cat reports/verdict.json || true
+      - name: Commit & push evidence (on pass)
+        if: steps.gate.outcome == 'success'
+        run: |
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
+          git add logs/*.jsonl reports/*.html reports/*.pdf reports/verdict.json || true
+          git commit -m "auto: POC PASSED ✅ [skip ci] $(date -u +'%Y-%m-%dT%H:%M:%SZ')" || echo "nothing to commit"
+          git push
